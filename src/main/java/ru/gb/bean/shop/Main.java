@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Scope;
 import ru.gb.bean.cart.Cart;
 import ru.gb.bean.cart.CartFactory;
 import ru.gb.bean.config.ApplicationConfiguration;
+import ru.gb.bean.productRepository.Product;
 import ru.gb.bean.productRepository.ProductRepository;
 
 import java.util.Scanner;
@@ -17,6 +18,8 @@ public class Main {
         System.out.println(context);
         System.out.println("\n Welcome in Shop. Insert your command. To help insert /help ");
         Scanner scanner = new Scanner(System.in);
+        Cart cart = context.getBean(Cart.class);
+        ProductRepository prodRep = context.getBean(ProductRepository.class);
         while (true) {
             String command = scanner.next();
             if (command.equals("/help"))
@@ -27,34 +30,37 @@ public class Main {
                         "/get_all - return all Product from ProductRepository \n " +
                         "/get_id - return Product_id from ProductRepository by id \n " +
                         "/exit - to EXIT from App \n ");
-            if (command.equals("/new")) context.getBean(Cart.class);
+            if (command.equals("/new")) {
+                context.getBean(Cart.class);
+                System.out.println("Add new Cart. Product in old Cart is Los");
+            }
             if (command.equals("/add")) {
-                System.out.println("Enter id Product");
+                System.out.println("Enter id Product 1-5");
                 int id  = scanner.nextInt();
-                context.getBean(Cart.class).setProductCart(context.getBean(ProductRepository.class).getProdRepoId(id));
+                cart.setProductCart((Product) prodRep.getProdRepoId(id-1));
                 System.out.println("Complete");
             }
             if (command.equals("/del")){
-                System.out.println("Enter id Product");
+                System.out.println("Enter id Product 1-5");
                 int id  = scanner.nextInt();
-                context.getBean(Cart.class).setRemoveProd(id);
+                cart.setRemoveProd(id-1);
                 System.out.println("Complete");
             }
             if (command.equals("/cart")){
-                System.out.println(context.getBean(Cart.class).getCart());
+                System.out.println(cart.getCart());
             }
             if (command.equals("/get_all")){
-                System.out.println(context.getBean(ProductRepository.class).getProdRepo());
+                System.out.println(prodRep.getProdRepo());
             }
             if (command.equals("/get_id")){
-                System.out.println("Enter id");
+                System.out.println("Enter id 1-5");
                 int id  = scanner.nextInt();
-                System.out.println(context.getBean(ProductRepository.class).getProdRepoId(id));
+                System.out.println(prodRep.getProdRepoId(id-1));
             }
             if (command.equals("/exit")){
                 break;
             }
         }
-        System.out.println("Thank you for visiting, we are waiting for you again");
+        System.out.println("\nThank you for visiting, we are waiting for you again");
     }
 }

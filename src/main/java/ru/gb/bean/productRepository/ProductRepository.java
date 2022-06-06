@@ -41,8 +41,13 @@ public class ProductRepository {
         return prodRepo;
     }
 
-    public Product getProdRepoId(int id) {
-        Product product=prodRepo.get(id);
-        return product;
+    public Object getProdRepoId(int id) {
+        try {
+            Product product = prodRepo.get(id);
+            return product;
+        }catch (IndexOutOfBoundsException ex){
+            System.out.println("Not that kind of product");
+        }
+        return null;
     }
 }

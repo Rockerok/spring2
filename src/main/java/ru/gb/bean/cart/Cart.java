@@ -15,15 +15,15 @@ public class Cart {
     private CartFactory cartFactory;
     private List<Product> productCart;
 
-    public int getCart() {
-        for (Product pr: productCart) {
-            System.out.println(pr);
-        }
-        return productCart.size();
+    public List<Product> getCart() {
+//        for (Product pr: productCart) {
+//            System.out.println(pr);
+//        }
+        return productCart;
     }
     public void setProductCart(Product product) {
         productCart.add(product);
-        System.out.println(productCart);
+//        System.out.println(productCart);
     }
 
     @Autowired
